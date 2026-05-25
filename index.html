@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Processamento de Imagens</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+            }
+
+            .canvas-container {
+                display: flex;
+                gap: 20px;
+                margin-top: 20px;
+            }
+
+            canvas {
+                border: 1px solid #ccc;
+                max-width: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Trabalho de Processamento de Imagens</h1>
+
+        <input
+            type="file"
+            id="uploadImagem1"
+            accept=".bmp,.jpg,.jpeg,.png,image/bmp,image/jpeg,image/png"
+        />
+
+        <input
+            type="file"
+            id="uploadImagem2"
+            accept=".bmp,.jpg,.jpeg,.png,image/bmp,image/jpeg,image/png"
+        />
+
+        <h2>Imagem 1</h2>
+        <canvas id="canvasOriginal1"></canvas>
+
+        <h2>Imagem 2</h2>
+        <canvas id="canvasOriginal2"></canvas>
+
+        <button onclick="somarImagens()">Somar imagens</button>
+
+        <button onclick="subtrairImagens()">Subtrair imagens</button>
+        <input type="number" id="valorSomaConstante" value="50" />
+        <button onclick="somarConstanteImagem()">Somar constante</button>
+        <input type="number" id="valorSubtracaoConstante" value="50" />
+        <button onclick="subtrairConstanteImagem()">Subtrair constante</button>
+        <input
+            type="number"
+            id="valorMultiplicacaoConstante"
+            value="1.5"
+            step="0.1"
+        />
+        <button onclick="multiplicarConstanteImagem()">
+            Multiplicar constante
+        </button>
+        <input type="number" id="valorDivisaoConstante" value="2" step="0.1" />
+        <button onclick="dividirConstanteImagem()">Dividir constante</button>
+        <button onclick="converterParaEscalaDeCinza()">
+            Converter para escala de cinza
+        </button>
+        <button onclick="inverterImagemEsquerdaDireita()">
+            Inverter a imagem da esquerda pra direita
+        </button>
+        <button onclick="inverterImagemCimaBaixo()">
+            Inverter a imagem de cima pra baixo
+        </button>
+        <button onclick="diferencaImagens()">Diferenca entre as imagens</button>
+
+        <input
+            type="number"
+            id="valorBlending"
+            value="0.5"
+            min="0"
+            max="1"
+            step="0.1"
+        />
+        <button onclick="blendingImagens()">
+            Aplicar Blending nas imagens
+        </button>
+
+        <button onclick="mediaImagens()">Media das imagens</button>
+
+        <button onclick="operacaoNotImagem()">Operação NOT da imagem</button>
+
+        <button onclick="operacaoAndImagens()">Operação AND das imagens</button>
+
+        <button onclick="operacaoOrImagens()">Operação OR das imagens</button>
+        
+        <button onclick="operacaoXorImagens()">Operação XOR das imagens</button>
+
+        <h2>Resultado</h2>
+        <canvas id="canvasResultado"></canvas>
+        <script src="script.js"></script>
+
+        <button onclick="salvarImagemResultado()">
+            Salvar imagem resultado
+        </button>
+    </body>
+</html>
