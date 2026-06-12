@@ -681,3 +681,31 @@ function operacaoXorImagens() {
   }
   exibirResultado(matrizResultado, largura, altura);
 }
+
+function limiarizacaoImagem() {
+  const largura = imagem1.largura;
+  const altura = imagem1.altura;
+  const matrizResultado = [];
+
+  for (let y = 0; y < altura; y++) {
+    const linha = [];
+    for (let x = 0; x < largura; x++) {
+      const pixel = imagem1.matriz[y][x];
+
+      const threshold = 128;
+
+      const cinza = Math.round((pixel.r + pixel.g + pixel.b) / 3);
+
+      const valor = cinza >= threshold ? 255 : 0;
+
+      linha.push({
+        r: valor,
+        g: valor,
+        b: valor,
+        a: pixel.a
+      })
+    }
+    matrizResultado.push(linha);
+  }
+  exibirResultado(matrizResultado, largura, altura); 
+}
