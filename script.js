@@ -683,6 +683,11 @@ function operacaoXorImagens() {
 }
 
 function limiarizacaoImagem() {
+  if (!imagem1) {
+    alert("Carregue a imagem 1");
+    return;
+  }
+
   const largura = imagem1.largura;
   const altura = imagem1.altura;
   const matrizResultado = [];
@@ -707,5 +712,106 @@ function limiarizacaoImagem() {
     }
     matrizResultado.push(linha);
   }
-  exibirResultado(matrizResultado, largura, altura); 
+  exibirResultado(matrizResultado, largura, altura);
+}
+
+function negativoImagem() {
+  if (!imagem1) {
+    alert("Carregue a imagem 1");
+    return;
+  }
+
+  const largura = imagem1.largura;
+  const altura = imagem1.altura;
+  const matrizResultado = [];
+
+  for (let y = 0; y < altura; y++) {
+    const linha = [];
+    for (let x = 0; x < largura; x++) {
+      const pixel = imagem1.matriz[y][x];
+
+      const negR = 255 - pixel.r;
+      const negG = 255 - pixel.g;
+      const negB = 255 - pixel.b;
+
+      linha.push({
+        r: limitarValor(negR),
+        g: limitarValor(negG),
+        b: limitarValor(negB),
+        a: pixel.a,
+      });
+    }
+    matrizResultado.push(linha);
+  }
+  exibirResultado(matrizResultado, largura, altura);
+
+}
+
+
+function normalizarHistogramaImagem() {
+  if (!imagem1) {
+    alert("Carregue a imagem 1");
+    return;
+  }
+  const largura = imagem1.largura;
+  const altura = imagem1.altura;
+  const matrizResultado = [];
+
+  const histograma = new Array(256).fill(0);
+
+  //calcular o histograma da imagem
+  for (let y = 0; y < altura; y++) {
+    for (let x = 0; x < largura; x++) {
+      const pixel = imagem1.matriz[y][x];
+
+      const cinza = Math.round((pixel.r + pixel.g + pixel.b) / 3);
+
+      histograma[cinza]++;
+    }
+  }
+
+  //calcular o CFD
+  const cfd = new Array(256).fill(0);
+
+  cfd[0] = histograma[0];
+
+  for (let i = 1; i < 256; i++) {
+    cfd[i] = cfd[i - 1] + histograma[i];
+  }
+
+  //calcular o CFD minimo
+  let cfdMin = 0;
+
+  for (let i = 0; i < 256; i++) {
+    if (cfd[i] > 0) {
+      cfdMin = cfd[i];
+      break;
+    }
+  }
+
+  const mapa = new Array(256);
+  const totalPixels = largura * altura;
+
+  for (let i = 0; i < 256; i++) {
+    mapa[i] = Math.floor((cfd[i] - cfdMin) / (totalPixels - cfdMin)) * (L - 1);
+  }
+
+  for (let y = 0; y < altura; y++) {
+    const linha = [];
+    for (let x = 0; x < largura; x++) {
+      const pixel = imagem1.matriz[y][x];
+
+      const cinza = Math.round((pixel.r + pixel.g + pixel.b) / 3);
+
+      const valor = mapa[cinza];
+      linha.push({
+        r: valor,
+        g: valor,
+        b: valor,
+        a: pixel.a,
+      });
+    }
+    matrizResultado.push(linha);
+  }
+  exibirResultado(matrizResultado, largura, altura);
 }
