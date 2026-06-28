@@ -404,9 +404,7 @@ function aplicarDetectorBordas(kernelX, kernelY) {
         }
       }
 
-      const magnitude = Math.sqrt(
-        gradienteX * gradienteX + gradienteY * gradienteY,
-      );
+      const magnitude = Math.sqrt(gradienteX * gradienteX + gradienteY * gradienteY);
       const valor = limitarValor(magnitude);
 
       matrizResultado[y][x] = {
